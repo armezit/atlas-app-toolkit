@@ -4,14 +4,13 @@ import (
 	"context"
 	"database/sql/driver"
 	"fmt"
+	"github.com/jinzhu/inflection"
+	"gorm.io/datatypes"
+	"gorm.io/gorm/schema"
 	"reflect"
 	"strings"
 
 	"github.com/golang/protobuf/proto"
-	jgorm "github.com/jinzhu/gorm"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/jinzhu/inflection"
-
 	"time"
 
 	"github.com/infobloxopen/atlas-app-toolkit/rpc/resource"
@@ -91,9 +90,8 @@ func IsJSONCondition(ctx context.Context, fieldPath []string, obj interface{}) b
 		return false
 	}
 
-	fInterface := reflect.Zero(indirectType(field.Type)).Interface()
-	switch fInterface.(type) {
-	case postgres.Jsonb:
+	_, isJson := reflect.Zero(field.Type).Interface().(datatypes.JSON)
+	if isJson {
 		return true
 	}
 
@@ -136,7 +134,8 @@ func tableName(t reflect.Type) string {
 	if tn, ok := table.(tableNamer); ok {
 		return tn.TableName()
 	}
-	return inflection.Plural(jgorm.ToDBName(t.Name()))
+	ns := schema.NamingStrategy{}
+	return inflection.Plural(ns.ColumnName("", t.Name()))
 }
 
 func columnName(sf *reflect.StructField) string {
@@ -144,7 +143,8 @@ func columnName(sf *reflect.StructField) string {
 	if ex {
 		return tagCol
 	}
-	return jgorm.ToDBName(sf.Name)
+	ns := schema.NamingStrategy{}
+	return ns.ColumnName("", sf.Name)
 }
 
 func gormTag(sf *reflect.StructField, tag string) (bool, string) {

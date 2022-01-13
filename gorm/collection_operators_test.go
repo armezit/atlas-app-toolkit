@@ -3,14 +3,15 @@ package gorm
 import (
 	"context"
 	"fmt"
+	"gorm.io/driver/postgres"
 	"net/http"
 	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/jinzhu/gorm"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+	"gorm.io/gorm"
 
 	"github.com/infobloxopen/atlas-app-toolkit/gateway"
 	"github.com/infobloxopen/atlas-app-toolkit/query"
@@ -65,8 +66,12 @@ func setUp(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	var gormDB *gorm.DB
-	gormDB, err = gorm.Open("postgres", db)
+	gormDB, err = gorm.Open(postgres.New(postgres.Config{
+		Conn:                 db,
+		PreferSimpleProtocol: true,
+	}), &gorm.Config{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -103,12 +108,16 @@ func TestApplyCollectionOperators(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		mock.ExpectQuery(`^SELECT "people".\* FROM "people" LEFT JOIN [[sub_people sub_person ON people.id = sub_person.person_id LEFT JOIN parents parent ON people.parent_id = parent.id]|[parents parent ON people.parent_id = parent.id LEFT JOIN sub_people sub_person ON people.id = sub_person.person_id]] WHERE (((people.age <= \$1) AND (sub_person.name = \$2))) ORDER BY people.age,sub_person.name,parent.name desc LIMIT 2 OFFSET 1$`).WithArgs(25.0, "Mike").
+		mock.ExpectQuery(`^SELECT "people"."id","people"."name","people"."age","people"."parent_id" FROM "people" LEFT JOIN [[sub_people sub_person ON people.id = sub_person.person_id LEFT JOIN parents parent ON people.parent_id = parent.id]|[parents parent ON people.parent_id = parent.id LEFT JOIN sub_people sub_person ON people.id = sub_person.person_id]] WHERE ((people.age <= \$1) AND (sub_person.name = \$2)) ORDER BY people.age,sub_person.name,parent.name desc LIMIT 2 OFFSET 1$`).
+			WithArgs(25.0, "Mike").
 			WillReturnRows(sqlmock.NewRows([]string{"id", "name"}).AddRow(111, "Mike"))
 
-		mock.ExpectQuery(fixedFullRe("SELECT * FROM  \"ordered_items\" WHERE (\"person_id\" IN ($1)) ORDER BY \"position\"")).WithArgs(111).
+		mock.ExpectQuery(fixedFullRe("SELECT * FROM  \"ordered_items\" WHERE \"ordered_items\".\"person_id\" = $1 ORDER BY position")).
+			WithArgs(111).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "position", "person_id"}))
-		mock.ExpectQuery(fixedFullRe("SELECT * FROM  \"sub_people\" WHERE (\"person_id\" IN ($1))")).WithArgs(111).
+
+		mock.ExpectQuery(fixedFullRe("SELECT * FROM  \"sub_people\" WHERE \"sub_people\".\"person_id\" = $1")).
+			WithArgs(111).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "name", "position"}))
 
 		var actual []Person

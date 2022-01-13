@@ -354,9 +354,9 @@ func (converter *DefaultSortingCriteriaConverter) SortingCriteriaToGorm(ctx cont
 	return dbCr, assoc, err
 }
 
-func (converter *DefaultPaginationConverter) PaginationToGorm(ctx context.Context, p *query.Pagination) (offset, limit int32) {
+func (converter *DefaultPaginationConverter) PaginationToGorm(ctx context.Context, p *query.Pagination) (offset, limit int) {
 	if p != nil {
-		return p.GetOffset(), p.GetLimit()
+		return int(p.GetOffset()), int(p.GetLimit())
 	}
 	return 0, 0
 }

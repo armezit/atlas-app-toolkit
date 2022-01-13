@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 )
@@ -56,7 +57,7 @@ func NewTestPostgresDB(opts ...option) (PostgresDB, error) {
 // running migrations. If a migration function has not been specified, then the
 // tables are dropped but not regenerated
 func (db PostgresDB) Reset() error {
-	dbSQL, err := sql.Open("postgres", db.GetDSN())
+	dbSQL, err := db.OpenConnection()
 	if err != nil {
 		return err
 	}
@@ -110,6 +111,21 @@ func (db PostgresDB) RunAsDockerContainer() (func() error, error) {
 	return cleanup, nil
 }
 
+func (db PostgresDB) OpenConnection() (*sql.DB, error) {
+	var driverName string
+	for _, v := range sql.Drivers() {
+		if v == "postgres" || v == "pgx" {
+			driverName = v
+			break
+		}
+	}
+	driver, _ := sql.Open(driverName, db.GetDSN())
+	if driver == nil {
+		return nil, errors.New("postgres driver not found")
+	}
+	return driver, nil
+}
+
 func (db PostgresDB) CheckConnection() error {
 	ctx, cancel := context.WithTimeout(context.Background(), db.timeout)
 	defer cancel()
@@ -118,7 +134,11 @@ func (db PostgresDB) CheckConnection() error {
 		for {
 			select {
 			case <-time.After(500 * time.Millisecond):
-				driver, _ := sql.Open("postgres", db.GetDSN())
+				driver, err := db.OpenConnection()
+				if err != nil {
+					errStream <- err
+					return
+				}
 				if err := driver.Ping(); err == nil {
 					errStream <- nil
 					return

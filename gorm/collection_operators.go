@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 
 	"github.com/infobloxopen/atlas-app-toolkit/query"
 )
@@ -20,7 +20,7 @@ type FieldSelectionConverter interface {
 }
 
 type PaginationConverter interface {
-	PaginationToGorm(ctx context.Context, p *query.Pagination) (offset, limit int32)
+	PaginationToGorm(ctx context.Context, p *query.Pagination) (offset, limit int)
 }
 
 type CollectionOperatorsConverter interface {
@@ -127,7 +127,7 @@ func JoinAssociations(ctx context.Context, db *gorm.DB, assoc map[string]struct{
 		for i, k := range sourceKeys {
 			keyPairs = append(keyPairs, k+" = "+targetKeys[i])
 		}
-		alias := gorm.ToDBName(k)
+		alias := db.NamingStrategy.ColumnName("", k)
 		join := fmt.Sprintf("LEFT JOIN %s %s ON %s", tableName, alias, strings.Join(keyPairs, " AND "))
 		db = db.Joins(join)
 	}
