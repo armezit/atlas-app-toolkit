@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
+	mock_transport "github.com/armezit/atlas-app-toolkit/mocks/transport"
 	"github.com/dgrijalva/jwt-go"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
-	mock_transport "github.com/infobloxopen/atlas-app-toolkit/mocks/transport"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"

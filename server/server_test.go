@@ -14,10 +14,10 @@ import (
 
 	"net"
 
-	"github.com/infobloxopen/atlas-app-toolkit/gateway"
-	"github.com/infobloxopen/atlas-app-toolkit/health"
-	server_test "github.com/infobloxopen/atlas-app-toolkit/server/testdata"
-	"github.com/infobloxopen/atlas-app-toolkit/servertest"
+	"github.com/armezit/atlas-app-toolkit/gateway"
+	"github.com/armezit/atlas-app-toolkit/health"
+	server_test "github.com/armezit/atlas-app-toolkit/server/testdata"
+	"github.com/armezit/atlas-app-toolkit/servertest"
 	"google.golang.org/grpc"
 )
 

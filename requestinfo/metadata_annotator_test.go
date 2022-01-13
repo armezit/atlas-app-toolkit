@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/armezit/atlas-app-toolkit/rpc/resource"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/infobloxopen/atlas-app-toolkit/rpc/resource"
 	"google.golang.org/grpc/metadata"
 )
 

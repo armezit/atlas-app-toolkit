@@ -10,7 +10,7 @@ import (
 
 	"github.com/lib/pq"
 
-	"github.com/infobloxopen/atlas-app-toolkit/errors"
+	"github.com/armezit/atlas-app-toolkit/errors"
 )
 
 func TestCond(t *testing.T) {

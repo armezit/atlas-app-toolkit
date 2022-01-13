@@ -10,8 +10,8 @@ import (
 
 	"bytes"
 
+	resourcepb "github.com/armezit/atlas-app-toolkit/rpc/resource"
 	"github.com/golang/protobuf/proto"
-	resourcepb "github.com/infobloxopen/atlas-app-toolkit/rpc/resource"
 )
 
 type TestCodec struct{}

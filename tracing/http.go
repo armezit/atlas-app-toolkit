@@ -10,7 +10,7 @@ import (
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/trace"
 
-	"github.com/infobloxopen/atlas-app-toolkit/auth"
+	"github.com/armezit/atlas-app-toolkit/auth"
 )
 
 const (

@@ -1,8 +1,8 @@
 package integration
 
 import (
+	"github.com/armezit/atlas-app-toolkit/auth"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/infobloxopen/atlas-app-toolkit/auth"
 )
 
 const (

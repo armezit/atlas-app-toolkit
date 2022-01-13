@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.27.1
 // 	protoc        v3.15.7
-// source: github.com/infobloxopen/atlas-app-toolkit/query/collection_operators.proto
+// source: github.com/armezit/atlas-app-toolkit/query/collection_operators.proto
 
 package query
 

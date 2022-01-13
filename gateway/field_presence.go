@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/infobloxopen/atlas-app-toolkit/util"
+	"github.com/armezit/atlas-app-toolkit/util"
 )
 
 const (

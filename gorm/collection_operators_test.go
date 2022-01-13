@@ -13,8 +13,8 @@ import (
 	"google.golang.org/grpc/metadata"
 	"gorm.io/gorm"
 
-	"github.com/infobloxopen/atlas-app-toolkit/gateway"
-	"github.com/infobloxopen/atlas-app-toolkit/query"
+	"github.com/armezit/atlas-app-toolkit/gateway"
+	"github.com/armezit/atlas-app-toolkit/query"
 )
 
 type Person struct {

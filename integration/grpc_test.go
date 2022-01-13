@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/armezit/atlas-app-toolkit/auth"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/infobloxopen/atlas-app-toolkit/auth"
 	"google.golang.org/grpc/metadata"
 )
 

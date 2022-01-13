@@ -5,8 +5,8 @@ import (
 
 	"google.golang.org/grpc/metadata"
 
-	"github.com/infobloxopen/atlas-app-toolkit/gateway"
-	"github.com/infobloxopen/atlas-app-toolkit/requestid"
+	"github.com/armezit/atlas-app-toolkit/gateway"
+	"github.com/armezit/atlas-app-toolkit/requestid"
 )
 
 // OutgoingContext set to outgoing context request_id, auth_token, X-Forwarded-For, x-geo- and x-b3- headers value

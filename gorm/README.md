@@ -105,7 +105,7 @@ The created transaction is stored in `context.Context` and passed to the request
 
 ```go
 import (
-	"github.com/infobloxopen/atlas-app-toolkit/gorm"
+	"github.com/armezit/atlas-app-toolkit/gorm"
 )
 
 func (s *MyService) MyMethod(ctx context.Context, req *MyMethodRequest) (*MyMethodResponse, error) {

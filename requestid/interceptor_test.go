@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	mock_transport "github.com/infobloxopen/atlas-app-toolkit/mocks/transport"
+	mock_transport "github.com/armezit/atlas-app-toolkit/mocks/transport"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )

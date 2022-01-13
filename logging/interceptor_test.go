@@ -18,8 +18,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/infobloxopen/atlas-app-toolkit/logging/mocks"
-	"github.com/infobloxopen/atlas-app-toolkit/requestid"
+	"github.com/armezit/atlas-app-toolkit/logging/mocks"
+	"github.com/armezit/atlas-app-toolkit/requestid"
 )
 
 const (
@@ -62,7 +62,7 @@ func TestUnaryClientInterceptor(t *testing.T) {
 	interceptor := UnaryClientInterceptor(logrus.NewEntry(testLogger))
 
 	// FIXME: clients have OutgoingContext, so the mock should too
-	// https://github.com/infobloxopen/atlas-app-toolkit/issues/191
+	// https://github.com/armezit/atlas-app-toolkit/issues/191
 	ctx := metadata.NewIncomingContext(context.Background(), metadata.MD(testMD))
 
 	invokerMock := func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, opts ...grpc.CallOption) error {

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/armezit/atlas-app-toolkit/query"
 	"github.com/golang/protobuf/proto"
-	"github.com/infobloxopen/atlas-app-toolkit/query"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )

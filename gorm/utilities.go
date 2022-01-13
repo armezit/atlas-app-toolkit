@@ -13,8 +13,8 @@ import (
 	"github.com/golang/protobuf/proto"
 	"time"
 
-	"github.com/infobloxopen/atlas-app-toolkit/rpc/resource"
-	"github.com/infobloxopen/atlas-app-toolkit/util"
+	"github.com/armezit/atlas-app-toolkit/rpc/resource"
+	"github.com/armezit/atlas-app-toolkit/util"
 )
 
 // HandleFieldPath converts fieldPath to appropriate db string for use in where/order by clauses

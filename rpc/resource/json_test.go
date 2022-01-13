@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/infobloxopen/atlas-app-toolkit/rpc/resource"
+	"github.com/armezit/atlas-app-toolkit/rpc/resource"
 )
 
 func TestIdentifier_MarshalJSONPB(t *testing.T) {

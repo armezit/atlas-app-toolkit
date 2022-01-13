@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/infobloxopen/atlas-app-toolkit/query"
+	"github.com/armezit/atlas-app-toolkit/query"
 )
 
 //retainFields function extracts the configuration for fields that

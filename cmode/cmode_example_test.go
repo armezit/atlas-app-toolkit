@@ -3,7 +3,7 @@ package cmode
 import (
 	"net/http"
 
-	"github.com/infobloxopen/atlas-app-toolkit/cmode/logger"
+	"github.com/armezit/atlas-app-toolkit/cmode/logger"
 	"github.com/sirupsen/logrus"
 )
 
